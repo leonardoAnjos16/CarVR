@@ -12,7 +12,7 @@ public class Player : MonoBehaviour
     void Start()
     {
         // Gets GameController object from the scene
-        gameController = FindObjectOfType<GameController>() as GameController;       
+        gameController = FindObjectOfType(typeof(GameController)) as GameController;
 
         // Gets rigidbody of the object that has the script
         rigidBody = GetComponent<Rigidbody>();

@@ -17,7 +17,7 @@ public class GameController : MonoBehaviour
         // Decreases speed based on car-street friction
         speed -= friction * Time.deltaTime;
 
-        //Ensures speed stays on interval [0, 20]
+        // Ensures speed stays on interval [0, 20]
         speed = Mathf.Clamp(speed, 0, 20);
     }
 }
