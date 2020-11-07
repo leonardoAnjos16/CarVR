@@ -4,38 +4,30 @@ using UnityEngine;
 
 public class Player : MonoBehaviour
 {
-    private const float FRICTION = 1f;
-
-    private Rigidbody rb;
+    private GameController gameController;
+    private Rigidbody rigidBody;
     private float dirX;
-
-    public float speed;
-    public float acceleration;
 
     // Start is called before the first frame update
     void Start()
     {
+        // Gets GameController object from the scene
+        gameController = FindObjectOfType<GameController>() as GameController;       
+
         // Gets rigidbody of the object that has the script
-        rb = GetComponent<Rigidbody>();
+        rigidBody = GetComponent<Rigidbody>();
     }
 
     // Update is called once per frame
     void Update()
     {
-        // Gets the axis the user clicked and multiplying by the speed
-        dirX = Input.GetAxis("Horizontal") * speed;
-
-        // Updates speed based on up and down arrow clicks, acceleration and friction
-        speed += Input.GetAxis("Vertical") * Time.deltaTime * acceleration;
-        speed -= FRICTION * Time.deltaTime;
-
-        // Ensures speed stays in interval [0, 20]
-        speed = Mathf.Clamp(speed, 0f, 20f);
+        // Gets the axis the user clicked and multiply it by the speed
+        dirX = Input.GetAxis("Horizontal") * gameController.speed;
     }
 
-    //Usually you change the physics in this function
+    // Usually you make physics-related changes in this function
     void FixedUpdate(){
         //Changing the velocity of the object
-        rb.velocity = new Vector3(dirX, 0, speed);
+        rigidBody.velocity = new Vector3(dirX, 0, 0);
     }
 }
