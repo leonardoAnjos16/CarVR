@@ -13,7 +13,7 @@ public class CameraRotation : MonoBehaviour
         Vector3 rotation = transform.eulerAngles;
 
         // Calculates desired rotation angle
-        float angle = Input.GetAxis("Mouse X") * Time.deltaTime * speed;
+        float angle = Input.GetAxis("Mouse X") * speed * Time.deltaTime;
 
         // Ensures it rotates within interval [-90, 90]
         rotation.y += angle;
