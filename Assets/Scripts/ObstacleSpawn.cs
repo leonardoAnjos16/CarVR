@@ -9,7 +9,7 @@ public class ObstacleSpawn : MonoBehaviour
     public GameObject[] obstaclePrefabs;
 
     private GameController gameController;
-    private float spawnInterval = 6f;
+    private float spawnInterval = 200f;
 
     // Start is called before the first frame update
     void Start()
@@ -24,14 +24,13 @@ public class ObstacleSpawn : MonoBehaviour
         System.Random random = new System.Random();
 
         while (true) {
-            yield return new WaitForSeconds(spawnInterval);
-
             GameObject prefab = obstaclePrefabs[random.Next(obstaclePrefabs.Length)];
             StreetLane lane = (StreetLane) streetLanes.GetValue(random.Next(streetLanes.Length));
             Vector3 position = SpawnPosition(prefab, lane);
 
             Instantiate(prefab, position, Quaternion.identity, transform);
-            spawnInterval = System.Math.Max(spawnInterval - 0.1f, 3f);
+            yield return new WaitForSeconds(spawnInterval / gameController.speed);
+            spawnInterval = System.Math.Max(spawnInterval - 2f, 50f);
         }
     }
 

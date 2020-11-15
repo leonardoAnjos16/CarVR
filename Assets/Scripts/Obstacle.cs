@@ -13,7 +13,7 @@ public class Obstacle : MonoBehaviour
     {
         gameController = FindObjectOfType(typeof(GameController)) as GameController;
         rigidBody = GetComponent<Rigidbody>();
-        speed = gameObject.tag == "Car" ? 8f : 0f;
+        speed = gameObject.tag == "Car" ? 10f : 0f;
     }
 
     // Update is called once per frame
@@ -24,6 +24,6 @@ public class Obstacle : MonoBehaviour
     }
 
     void FixedUpdate() {
-        rigidBody.velocity = new Vector3(0f, 0f, speed - 2 * gameController.speed);
+        rigidBody.velocity = new Vector3(0f, 0f, speed - gameController.speed);
     }
 }

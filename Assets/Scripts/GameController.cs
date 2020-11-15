@@ -21,4 +21,9 @@ public class GameController : MonoBehaviour
         // Ensures speed stays on interval [0, 20]
         speed = Mathf.Clamp(speed, 0, 20);
     }
+
+    public void GameOver() {
+        // TODO: Change to actual game over logic
+        Time.timeScale = 0f;
+    }
 }
