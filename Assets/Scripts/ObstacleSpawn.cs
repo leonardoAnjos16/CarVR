@@ -8,29 +8,28 @@ public class ObstacleSpawn : MonoBehaviour
 
     public GameObject[] obstaclePrefabs;
 
-    private GameController gameController;
-    private float spawnInterval = 200f;
+    private Player player;
+    private float spawnInterval = 16f;
 
     // Start is called before the first frame update
     void Start()
     {
-        gameController = FindObjectOfType(typeof(GameController)) as GameController;
+        player = FindObjectOfType(typeof(Player)) as Player;
         StartCoroutine(Spawn());
     }
 
     // Thread for spwaning obstacles
     private IEnumerator Spawn() {
-        System.Array streetLanes = System.Enum.GetValues(typeof(StreetLane));
+        yield return new WaitForSeconds(2f);
         System.Random random = new System.Random();
 
         while (true) {
             GameObject prefab = obstaclePrefabs[random.Next(obstaclePrefabs.Length)];
-            StreetLane lane = (StreetLane) streetLanes.GetValue(random.Next(streetLanes.Length));
-            Vector3 position = SpawnPosition(prefab, lane);
+            Vector3 position = SpawnPosition(prefab, player.lane);
 
             Instantiate(prefab, position, Quaternion.identity, transform);
-            yield return new WaitForSeconds(spawnInterval / gameController.speed);
-            spawnInterval = System.Math.Max(spawnInterval - 2f, 50f);
+            yield return new WaitForSeconds(spawnInterval);
+            spawnInterval = System.Math.Max(spawnInterval - 0.1f, 8f);
         }
     }
 
@@ -38,9 +37,6 @@ public class ObstacleSpawn : MonoBehaviour
     private Vector3 SpawnPosition(GameObject prefab, StreetLane lane) {
         float yPosition;
         switch (prefab.tag) {
-            case "Car":
-                yPosition = -0.02f;
-                break;
             default:
                 yPosition = 0f;
                 break;

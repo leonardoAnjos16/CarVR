@@ -480,6 +480,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1081533360}
   - component: {fileID: 1081533361}
+  - component: {fileID: 1081533362}
   m_Layer: 0
   m_Name: Obstacles
   m_TagString: Untagged
@@ -514,7 +515,20 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   obstaclePrefabs:
-  - {fileID: 6913145947404701095, guid: 7401deffbf6a03a4ba19debfac631fd4, type: 3}
+  - {fileID: 1058711466388801701, guid: c9ea0f29c5f77fc459384596ccf74616, type: 3}
+--- !u!114 &1081533362
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1081533359}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 069f827bc46e5ea46a72eb35e52f7ea0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  prefab: {fileID: 6913145947404701095, guid: 7401deffbf6a03a4ba19debfac631fd4, type: 3}
 --- !u!1 &1148118025
 GameObject:
   m_ObjectHideFlags: 0
@@ -558,9 +572,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8acd9e4375dbfe648a661c222038663f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  speed: 10
-  friction: 0.5
-  acceleration: 2
 --- !u!1001 &1184454245
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -643,6 +654,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: Player
       objectReference: {fileID: 0}
+    - target: {fileID: -927199367670048503, guid: c6e9d7a2246506c45993bab3cacb5b00,
+        type: 3}
+      propertyPath: m_TagString
+      value: Car
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: c6e9d7a2246506c45993bab3cacb5b00, type: 3}
 --- !u!1 &1184454246 stripped
@@ -685,6 +701,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: af574a84050394bb6989e1ffcaf18b2d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  speed: 10
+  friction: 0.5
+  acceleration: 2
 --- !u!65 &1184454250
 BoxCollider:
   m_ObjectHideFlags: 0

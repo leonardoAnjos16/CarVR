@@ -6,17 +6,18 @@ public class Obstaculo : MonoBehaviour
 {
     public float speedMultiplier;
     public Rigidbody rb;
-    private GameController gameController;
+    //private GameController gameController;
+
     // Start is called before the first frame update
     void Start()
     {
-        gameController = FindObjectOfType(typeof(GameController)) as GameController;
+        //gameController = FindObjectOfType(typeof(GameController)) as GameController;
         Debug.Log("Funcionando pelo menos isso");
     }
 
-    // Update is called once per frame
+    /* // Update is called once per frame
     void Update()
     {
-        transform.position -= new Vector3(0, 0, 0.2f + gameController.speed);
-    }
+        transform.position -= new Vector3(0, 0, 0.2f + gameController.playerSpeed);
+    } */
 }

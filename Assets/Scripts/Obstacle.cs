@@ -4,16 +4,14 @@ using UnityEngine;
 
 public class Obstacle : MonoBehaviour
 {
-    private GameController gameController;
+    private Player player;
     private Rigidbody rigidBody;
-    private float speed;
 
     // Start is called before the first frame update
     void Start()
     {
-        gameController = FindObjectOfType(typeof(GameController)) as GameController;
+        player = FindObjectOfType(typeof(Player)) as Player;
         rigidBody = GetComponent<Rigidbody>();
-        speed = gameObject.tag == "Car" ? 10f : 0f;
     }
 
     // Update is called once per frame
@@ -24,6 +22,6 @@ public class Obstacle : MonoBehaviour
     }
 
     void FixedUpdate() {
-        rigidBody.velocity = new Vector3(0f, 0f, speed - gameController.speed);
+        rigidBody.velocity = new Vector3(0f, 0f, -player.speed);
     }
 }

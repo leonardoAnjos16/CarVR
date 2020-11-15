@@ -6,13 +6,13 @@ public class StreetMovement : MonoBehaviour
 {
     public float speedMultiplier;
 
-    private GameController gameController;
+    private Player player;
     private Renderer renderer;
 
     // Start is called before the first frame update
     void Start()
     {
-        gameController = FindObjectOfType(typeof(GameController)) as GameController;
+        player = FindObjectOfType(typeof(Player)) as Player;
         renderer = GetComponent<Renderer>();
     }
 
@@ -20,7 +20,7 @@ public class StreetMovement : MonoBehaviour
     void Update()
     {
         Vector2 offset = renderer.material.GetTextureOffset("_MainTex");
-        offset.y -= gameController.speed * speedMultiplier * Time.deltaTime;
+        offset.y -= player.speed * speedMultiplier * Time.deltaTime;
         renderer.material.SetTextureOffset("_MainTex", new Vector2(0f, offset.y));
     }
 }
