@@ -18,31 +18,31 @@ public class Car : MonoBehaviour
     {
         rigidBody = GetComponent<Rigidbody>();
         maxSpeed = speed = Random.Range(5f, 10f);
-        acceleration = 2f;
+        acceleration = 10f;
     }
 
     // Update is called once per frame
     void Update()
     {
         RaycastHit hit;
-        if (ObstacleClose(Vector3.forward, out hit)) {
+        if (ObstacleClose(Vector3.forward, out hit, 50f)) {
             speed -= acceleration * Time.deltaTime;
             if (hit.collider.tag == "Obstacle") {
                 switch (_lane) {
                     case StreetLane.Left:
-                        if (!ObstacleClose(Vector3.right, out hit))
+                        if (!ObstacleClose(Vector3.right, out hit, 10f))
                             ChangeLane(StreetLane.Middle);
 
                         break;
                     case StreetLane.Middle:
-                        if (!ObstacleClose(Vector3.left, out hit))
+                        if (!ObstacleClose(Vector3.left, out hit, 10f))
                             ChangeLane(StreetLane.Left);
-                        else if (!ObstacleClose(Vector3.right, out hit))
+                        else if (!ObstacleClose(Vector3.right, out hit, 10f))
                             ChangeLane(StreetLane.Right);
 
                         break;
                     case StreetLane.Right:
-                        if (!ObstacleClose(Vector3.left, out hit))
+                        if (!ObstacleClose(Vector3.left, out hit, 10f))
                             ChangeLane(StreetLane.Middle);
 
                         break;
@@ -79,7 +79,7 @@ public class Car : MonoBehaviour
         transform.position = position;
     }
 
-    private bool ObstacleClose(Vector3 direction, out RaycastHit hit) {
-        return Physics.Raycast(transform.position, transform.TransformDirection(direction), out hit, 50f);
+    private bool ObstacleClose(Vector3 direction, out RaycastHit hit, float distance) {
+        return Physics.Raycast(transform.position, transform.TransformDirection(direction), out hit, distance);
     }
 }
