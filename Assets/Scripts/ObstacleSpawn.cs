@@ -8,27 +8,34 @@ public class ObstacleSpawn : MonoBehaviour
 
     public GameObject[] obstaclePrefabs;
 
+    private GameController gameController;
+    private float spawnInterval = 6f;
+
     // Start is called before the first frame update
     void Start()
     {
-        StartCoroutine(Spawn(4f));
+        gameController = FindObjectOfType(typeof(GameController)) as GameController;
+        StartCoroutine(Spawn());
     }
 
-    private IEnumerator Spawn(float waitTime) {
+    // Thread for spwaning obstacles
+    private IEnumerator Spawn() {
         System.Array streetLanes = System.Enum.GetValues(typeof(StreetLane));
         System.Random random = new System.Random();
 
         while (true) {
-            yield return new WaitForSeconds(waitTime);
+            yield return new WaitForSeconds(spawnInterval);
 
             GameObject prefab = obstaclePrefabs[random.Next(obstaclePrefabs.Length)];
             StreetLane lane = (StreetLane) streetLanes.GetValue(random.Next(streetLanes.Length));
             Vector3 position = SpawnPosition(prefab, lane);
 
             Instantiate(prefab, position, Quaternion.identity, transform);
+            spawnInterval = System.Math.Max(spawnInterval - 0.1f, 3f);
         }
     }
 
+    // Defines spawn position based on prefab type and chosen lane
     private Vector3 SpawnPosition(GameObject prefab, StreetLane lane) {
         float yPosition;
         switch (prefab.tag) {

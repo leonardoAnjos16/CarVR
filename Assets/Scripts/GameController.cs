@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class GameController : MonoBehaviour
 {
+    [Header("Car Configuration")]
     public float speed;
     public float friction;
     public float acceleration;
