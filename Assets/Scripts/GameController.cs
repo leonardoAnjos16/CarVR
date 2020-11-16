@@ -7,6 +7,7 @@ using UnityEngine.UI;
 public class GameController : MonoBehaviour
 {
     private int score = 0;
+    private float scoreAux = 0;
     private int highScore;
     public Text scoreText;
     public Text highScoreText;
@@ -25,7 +26,9 @@ public class GameController : MonoBehaviour
     }
 
     void Update(){
-        score = score + 1;
+        
+        scoreAux = scoreAux + Time.deltaTime*10;
+        score = (int)scoreAux; 
         scoreText.text = "Score: " + score;
     }
 
