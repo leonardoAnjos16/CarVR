@@ -19,13 +19,14 @@ public class GameController : MonoBehaviour
             highScoreText.text = "High Score: " +  highScore;
 
         }else{
-              highScoreText.text = "Score: 0";
+              highScoreText.text = "High Score: 0";
               highScore = 0;
         }
     }
 
     void Update(){
         score = score + 1;
+        scoreText.text = "Score: " + score;
     }
 
 
@@ -33,6 +34,7 @@ public class GameController : MonoBehaviour
         // TODO: Change to actual game over logic
         Time.timeScale = 0f;
         Debug.Log("Game Over! " + message);
+        
 
         
     }
