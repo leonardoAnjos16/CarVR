@@ -5,7 +5,7 @@ using UnityEngine;
 public class Car : MonoBehaviour
 {
     private Rigidbody rigidBody;
-    private float maxSpeed, speed, acceleration;
+    private float maxSpeed, speed, acceleration, deacceleration;
     private StreetLane _lane;
 
     public StreetLane lane {
@@ -18,15 +18,16 @@ public class Car : MonoBehaviour
     {
         rigidBody = GetComponent<Rigidbody>();
         maxSpeed = speed = Random.Range(5f, 10f);
-        acceleration = 5f;
+        acceleration = 2f;
+        deacceleration = 8f;
     }
 
     // Update is called once per frame
     void Update()
     {
         RaycastHit hit;
-        if (ObstacleClose(Vector3.forward, out hit, 50f)) {
-            speed -= acceleration * Time.deltaTime;
+        if (ObstacleClose(Vector3.forward, out hit, 100f)) {
+            speed -= deacceleration * Time.deltaTime;
             if (hit.collider.gameObject.layer == LayerMask.NameToLayer("Obstacle")) {
                 switch (_lane) {
                     case StreetLane.Left:
@@ -80,6 +81,20 @@ public class Car : MonoBehaviour
     }
 
     private bool ObstacleClose(Vector3 direction, out RaycastHit hit, float distance) {
-        return Physics.Raycast(transform.position, transform.TransformDirection(direction), out hit, distance);
+        Debug.DrawRay(transform.position, transform.TransformDirection(direction) * distance, Color.green);
+
+        bool close = false;
+        if (direction == Vector3.left || direction == Vector3.right) {
+            for (float angle = 75f; angle >= -75f; angle -= 15f) {
+                float cos = (float) System.Math.Cos(System.Math.PI * angle / 180f);
+                float sin = (float) System.Math.Sin(System.Math.PI * angle / 180f);
+                if (direction == Vector3.left) cos *= -1;
+
+                Debug.DrawRay(transform.position, transform.TransformDirection(new Vector3(cos, 0f, sin)) * distance / System.Math.Abs(cos), Color.green);
+                close |= Physics.Raycast(transform.position, transform.TransformDirection(new Vector3(cos, 0f, sin)), out hit, distance / System.Math.Abs(cos));
+            }
+        }
+
+        return Physics.Raycast(transform.position, transform.TransformDirection(direction), out hit, distance) || close;
     }
 }
