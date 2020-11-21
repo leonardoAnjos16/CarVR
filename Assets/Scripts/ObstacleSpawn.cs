@@ -26,8 +26,9 @@ public class ObstacleSpawn : MonoBehaviour
         while (true) {
             GameObject prefab = obstaclePrefabs[random.Next(obstaclePrefabs.Length)];
             Vector3 position = SpawnPosition(prefab, player.lane);
+            Quaternion rotation = SpawnRotation(prefab);
 
-            Instantiate(prefab, position, Quaternion.identity, transform);
+            Instantiate(prefab, position, rotation, transform);
             yield return new WaitForSeconds(spawnInterval);
             spawnInterval = System.Math.Max(spawnInterval - 0.1f, 8f);
         }
@@ -37,6 +38,9 @@ public class ObstacleSpawn : MonoBehaviour
     private Vector3 SpawnPosition(GameObject prefab, StreetLane lane) {
         float yPosition;
         switch (prefab.tag) {
+            case "Cone":
+                yPosition = -0.5f;
+                break;
             default:
                 yPosition = 0f;
                 break;
@@ -52,5 +56,18 @@ public class ObstacleSpawn : MonoBehaviour
             default:
                 return new Vector3(0f, 0f, 0f);
         }
+    }
+
+    private Quaternion SpawnRotation(GameObject prefab) {
+        Vector3 rotation = new Vector3(0f, 0f, 0f);
+        switch (prefab.tag) {
+            case "Cone":
+                rotation.x = -90f;
+                break;
+            default:
+                break;
+        }
+
+        return Quaternion.Euler(rotation.x, rotation.y, rotation.z);
     }
 }

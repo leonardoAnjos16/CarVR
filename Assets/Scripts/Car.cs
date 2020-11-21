@@ -18,7 +18,7 @@ public class Car : MonoBehaviour
     {
         rigidBody = GetComponent<Rigidbody>();
         maxSpeed = speed = Random.Range(5f, 10f);
-        acceleration = 10f;
+        acceleration = 5f;
     }
 
     // Update is called once per frame
@@ -27,7 +27,7 @@ public class Car : MonoBehaviour
         RaycastHit hit;
         if (ObstacleClose(Vector3.forward, out hit, 50f)) {
             speed -= acceleration * Time.deltaTime;
-            if (hit.collider.tag == "Obstacle") {
+            if (hit.collider.gameObject.layer == LayerMask.NameToLayer("Obstacle")) {
                 switch (_lane) {
                     case StreetLane.Left:
                         if (!ObstacleClose(Vector3.right, out hit, 10f))
