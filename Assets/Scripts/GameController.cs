@@ -9,11 +9,13 @@ public class GameController : MonoBehaviour
     private float scoreAux = 0;
     private int highScore;
 
-    public Text scoreText;
+    public Canvas gameOverCanvas;
+    public Text[] gameOverTexts;
+    public Text newHighScoreText;
+    public Text mainScoreText;
 
     // Start is called before the first frame update
     void Start() {
-        scoreText.text = "Score: 0";
         if (PlayerPrefs.HasKey("highscore")) {
             highScore = PlayerPrefs.GetInt("highscore");
         } else {
@@ -25,18 +27,26 @@ public class GameController : MonoBehaviour
     void Update() {
         scoreAux += Time.deltaTime * 10;
         score = (int) scoreAux; 
-        scoreText.text = "Score: " + score.ToString("D8");
+        mainScoreText.text = "Score: " + score.ToString("D8");
     }
 
-    public void GameOver(string message) {
+    public void GameOver(string description) {
         // TODO: Change to actual game over logic
         Time.timeScale = 0f;
-        Debug.Log("Game Over! " + message);
+
+        if (score > highScore) {
+            UpdateHighScore();
+            newHighScoreText.gameObject.SetActive(true);
+        }
+
+        gameOverTexts[0].text = description;
+        gameOverTexts[1].text = "Score: " + score;
+        gameOverTexts[2].text = "High Score: " + highScore;
+        gameOverCanvas.gameObject.SetActive(true);
     }
 
     private void UpdateHighScore() {
-       if (score > highScore){
-           PlayerPrefs.SetInt("highscore", score);
-       }
+        highScore = score;
+        PlayerPrefs.SetInt("highscore", score);
     }
 }

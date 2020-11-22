@@ -12,7 +12,7 @@ public class Player : MonoBehaviour
 
     public float speed, friction, acceleration;
     public Text speedText;
-    
+
     // Start is called before the first frame update
     void Start()
     {
@@ -27,7 +27,8 @@ public class Player : MonoBehaviour
         speed += Input.GetAxis("Vertical") * acceleration * Time.deltaTime;
         speed -= friction * Time.deltaTime;
         speed = Mathf.Clamp(speed, 0, 20);
-        speedText.text= "Speed: " + (int)((speed*18)/5) + " km/h";
+
+        speedText.text = "Speed: " + (int) (speed * 18 / 5) + " km/h";
 
         // Moves according to user input
         Vector3 position = transform.position;
@@ -50,10 +51,10 @@ public class Player : MonoBehaviour
 
         // Checks game over
         if (speed < 5f)
-            gameController.GameOver("Too slow!");
+            gameController.GameOver("You shouldn't move that slow on a highway!");
     }
 
     void OnCollisionEnter(Collision collision) {
-        gameController.GameOver("Hit " + collision.gameObject);
+        gameController.GameOver("Oh no! You hit something!");
     }
 }
