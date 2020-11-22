@@ -39,7 +39,7 @@ public class Player : MonoBehaviour
                     _lane = StreetLane.Left;
                 else if (_lane == StreetLane.Right)
                     _lane = StreetLane.Middle;
-            } else {
+            } else if (position.x >= 0f) {
                 gameController.GameOver("You must always check the rearview before making a turn!");
             }
         } else if (Input.GetKeyUp("right") || Input.GetKeyUp("d")) {
@@ -49,7 +49,7 @@ public class Player : MonoBehaviour
                     _lane = StreetLane.Right;
                 else if (_lane == StreetLane.Left)
                     _lane = StreetLane.Middle;
-            } else {
+            } else if (position.x <= 0f) {
                 gameController.GameOver("You must always check the rearview before making a turn!");
             }
         }

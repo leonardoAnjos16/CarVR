@@ -6,6 +6,8 @@ public class CarSpawn : MonoBehaviour
 {
     private const float yPosition = -0.02f, zPosition = -200f;
 
+    private float spawnInterval = 10f;
+
     public GameObject prefab;
 
     // Start is called before the first frame update
@@ -21,7 +23,9 @@ public class CarSpawn : MonoBehaviour
         while (true) {
             Car car = Instantiate(prefab, new Vector3(0f, yPosition, zPosition), Quaternion.identity, transform).GetComponent<Car>();
             car.ChangeLane((StreetLane) streetLanes.GetValue(random.Next(streetLanes.Length)));
-            yield return new WaitForSeconds(10f);
+            yield return new WaitForSeconds(spawnInterval);
+
+            spawnInterval = System.Math.Max(spawnInterval - 0.5f, 5f);
         }
     }
 }
