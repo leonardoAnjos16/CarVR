@@ -56,6 +56,11 @@ public class Car : MonoBehaviour
             speed += acceleration * Time.deltaTime;
         }
 
+        // Prevents bug
+        Vector3 position = transform.position;
+        position.y = -0.02f;
+        transform.position = position;
+
         speed = Mathf.Clamp(speed, minSpeed, maxSpeed);
         if (transform.position.z > 300f)
             Destroy(gameObject);

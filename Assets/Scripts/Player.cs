@@ -30,32 +30,35 @@ public class Player : MonoBehaviour
 
         speedText.text = "Speed: " + (int) (speed * 18 / 5) + " km/h";
 
-        // Moves according to user input
-        Vector3 position = transform.position;
-        if (Input.GetKeyUp("left") || Input.GetKeyUp("a")) {
-            if (CameraWithinRange(270f, 360f) || CameraWithinRange(0f, 1.5f)) {
-                position.x -= 6f;
-                if (_lane == StreetLane.Middle)
-                    _lane = StreetLane.Left;
-                else if (_lane == StreetLane.Right)
-                    _lane = StreetLane.Middle;
-            } else if (position.x >= 0f) {
-                gameController.GameOver("You must always check the rearview before making a turn!");
+        if (Time.deltaTime > 0f) {
+            // Moves according to user input
+            Vector3 position = transform.position;
+            if (Input.GetKeyUp("left") || Input.GetKeyUp("a")) {
+                if (CameraWithinRange(270f, 360f) || CameraWithinRange(0f, 1.5f)) {
+                    position.x -= 6f;
+                    if (_lane == StreetLane.Middle)
+                        _lane = StreetLane.Left;
+                    else if (_lane == StreetLane.Right)
+                        _lane = StreetLane.Middle;
+                } else if (position.x >= 0f) {
+                    gameController.GameOver("You must always check the rearview before making a turn!");
+                }
+            } else if (Input.GetKeyUp("right") || Input.GetKeyUp("d")) {
+                if (CameraWithinRange(19f, 90f)) {
+                    position.x += 6f;
+                    if (_lane == StreetLane.Middle)
+                        _lane = StreetLane.Right;
+                    else if (_lane == StreetLane.Left)
+                        _lane = StreetLane.Middle;
+                } else if (position.x <= 0f) {
+                    gameController.GameOver("You must always check the rearview before making a turn!");
+                }
             }
-        } else if (Input.GetKeyUp("right") || Input.GetKeyUp("d")) {
-            if (CameraWithinRange(19f, 90f)) {
-                position.x += 6f;
-                if (_lane == StreetLane.Middle)
-                    _lane = StreetLane.Right;
-                else if (_lane == StreetLane.Left)
-                    _lane = StreetLane.Middle;
-            } else if (position.x <= 0f) {
-                gameController.GameOver("You must always check the rearview before making a turn!");
-            }
+            
+            position.x = Mathf.Clamp(position.x, -6f, 6f);
+            transform.position = position;
         }
 
-        position.x = Mathf.Clamp(position.x, -6f, 6f);
-        transform.position = position;
 
         // Checks game over
         if (speed < 5f)
