@@ -29,7 +29,9 @@ public class Car : MonoBehaviour
         RaycastHit hit;
         if (ObstacleClose(Vector3.forward, out hit, 100f)) {
             speed -= acceleration * Time.deltaTime;
-            if (hit.collider.gameObject.layer == LayerMask.NameToLayer("Obstacle")) {
+            if (hit.collider.tag == "Car" && hit.collider.gameObject.GetComponent<Rigidbody>().velocity.z < 0f) {
+                Destroy(gameObject);
+            } else if (hit.collider.gameObject.layer == LayerMask.NameToLayer("Obstacle")) {
                 switch (_lane) {
                     case StreetLane.Left:
                         if (!ObstacleClose(Vector3.right, out hit, 10f))

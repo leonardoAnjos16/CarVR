@@ -14,12 +14,6 @@ public class CarSpawn : MonoBehaviour
         StartCoroutine(Spawn());
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
-
     private IEnumerator Spawn() {
         System.Array streetLanes = System.Enum.GetValues(typeof(StreetLane));
         System.Random random = new System.Random();
