@@ -12,6 +12,7 @@ public class Player : MonoBehaviour
 
     public float speed, friction, acceleration;
     public Text speedText;
+    
     // Start is called before the first frame update
     void Start()
     {

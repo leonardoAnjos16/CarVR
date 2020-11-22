@@ -5,7 +5,8 @@ using UnityEngine;
 public class Car : MonoBehaviour
 {
     private Rigidbody rigidBody;
-    private float maxSpeed, speed, acceleration, deacceleration;
+    private float maxSpeed, minSpeed;
+    private float speed, acceleration;
     private StreetLane _lane;
 
     public StreetLane lane {
@@ -17,9 +18,9 @@ public class Car : MonoBehaviour
     void Start()
     {
         rigidBody = GetComponent<Rigidbody>();
+        minSpeed = -20f;
         maxSpeed = speed = Random.Range(5f, 10f);
-        acceleration = 2f;
-        deacceleration = 8f;
+        acceleration = 8f;
     }
 
     // Update is called once per frame
@@ -27,7 +28,7 @@ public class Car : MonoBehaviour
     {
         RaycastHit hit;
         if (ObstacleClose(Vector3.forward, out hit, 100f)) {
-            speed -= deacceleration * Time.deltaTime;
+            speed -= acceleration * Time.deltaTime;
             if (hit.collider.gameObject.layer == LayerMask.NameToLayer("Obstacle")) {
                 switch (_lane) {
                     case StreetLane.Left:
@@ -53,6 +54,7 @@ public class Car : MonoBehaviour
             speed += acceleration * Time.deltaTime;
         }
 
+        speed = Mathf.Clamp(speed, minSpeed, maxSpeed);
         if (transform.position.z > 300f)
             Destroy(gameObject);
     }
