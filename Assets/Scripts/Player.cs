@@ -33,17 +33,25 @@ public class Player : MonoBehaviour
         // Moves according to user input
         Vector3 position = transform.position;
         if (Input.GetKeyUp("left") || Input.GetKeyUp("a")) {
-            position.x -= 6f;
-            if (_lane == StreetLane.Middle)
-                _lane = StreetLane.Left;
-            else if (_lane == StreetLane.Right)
-                _lane = StreetLane.Middle;
+            if (CameraWithinRange(270f, 360f) || CameraWithinRange(0f, 1.5f)) {
+                position.x -= 6f;
+                if (_lane == StreetLane.Middle)
+                    _lane = StreetLane.Left;
+                else if (_lane == StreetLane.Right)
+                    _lane = StreetLane.Middle;
+            } else {
+                gameController.GameOver("You must always check the rearview before making a turn!");
+            }
         } else if (Input.GetKeyUp("right") || Input.GetKeyUp("d")) {
-            position.x += 6f;
-            if (_lane == StreetLane.Middle)
-                _lane = StreetLane.Right;
-            else if (_lane == StreetLane.Left)
-                _lane = StreetLane.Middle;
+            if (CameraWithinRange(19f, 90f)) {
+                position.x += 6f;
+                if (_lane == StreetLane.Middle)
+                    _lane = StreetLane.Right;
+                else if (_lane == StreetLane.Left)
+                    _lane = StreetLane.Middle;
+            } else {
+                gameController.GameOver("You must always check the rearview before making a turn!");
+            }
         }
 
         position.x = Mathf.Clamp(position.x, -6f, 6f);
@@ -56,5 +64,9 @@ public class Player : MonoBehaviour
 
     void OnCollisionEnter(Collision collision) {
         gameController.GameOver("Oh no! You hit something!");
+    }
+
+    bool CameraWithinRange(float start, float end) {
+        return Camera.main.transform.eulerAngles.y >= start && Camera.main.transform.eulerAngles.y <= end;
     }
 }
