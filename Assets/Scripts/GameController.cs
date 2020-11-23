@@ -31,9 +31,7 @@ public class GameController : MonoBehaviour
     }
 
     public void GameOver(string description) {
-        // TODO: Change to actual game over logic
         Time.timeScale = 0f;
-
         if (score > highScore) {
             UpdateHighScore();
             newHighScoreText.gameObject.SetActive(true);
