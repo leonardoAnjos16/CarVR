@@ -271,7 +271,7 @@ MonoBehaviour:
   m_Text: "- Utilize as setas              do teclado para trocar de faixa\n- Mova
     o mouse para visualizar suas laterais e retrovisores\n- Voc\xEA deve sempre olhar
     o retrovisor antes de trocar de faixa\n- Voc\xEA deve manter sua velocidade acima
-    de 20km/h\n"
+    de 17km/h\n"
 --- !u!222 &472500494
 CanvasRenderer:
   m_ObjectHideFlags: 0
